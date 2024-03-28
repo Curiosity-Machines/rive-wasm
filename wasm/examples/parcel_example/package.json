@@ -18,6 +18,7 @@
   },
   "dependencies": {
     "parcel-plugin-asset-copier": "^1.1.0",
+    "pixi.js": "github:gfodor/pixijs#avoid-texSubImage2D-build",
     "src": "^1.1.2"
   }
 }
