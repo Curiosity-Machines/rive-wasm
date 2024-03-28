@@ -286,6 +286,7 @@ public:
             // Always use MSAA if we don't have WEBGL_shader_pixel_local_storage.
             frameDescriptor.msaaSampleCount = 4;
         }
+        m_plsContext->static_impl_cast<PLSRenderContextGLImpl>()->invalidateGLState();
         m_plsContext->beginFrame(std::move(frameDescriptor));
         ++m_currentFrameID;
     }
