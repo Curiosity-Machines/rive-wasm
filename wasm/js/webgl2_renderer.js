@@ -329,7 +329,7 @@ Module["onRuntimeInitialized"] = function () {
   };
 
   const cppClear = Module["WebGL2Renderer"]["prototype"]["clear"];
-  Module["WebGL2Renderer"]["prototype"]["clear"] = function () {
+  Module["WebGL2Renderer"]["prototype"]["clear"] = function (preserveRenderTarget) {
     // Resize WebGL surface if the canvas size changed.
     GL.makeContextCurrent(this._handle);
     const canvas = this._canvas;
@@ -338,7 +338,7 @@ Module["onRuntimeInitialized"] = function () {
       this._width = canvas.width;
       this._height = canvas.height;
     }
-    cppClear.call(this);
+    cppClear.call(this, preserveRenderTarget);
   };
 
   Module["decodeImage"] = function (bytes, onComplete) {

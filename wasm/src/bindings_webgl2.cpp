@@ -264,12 +264,12 @@ public:
 
     // "clear()" is our hook for the beginning of a frame.
     // TODO: Give this a better name!!
-    void clear()
+    void clear(bool preserveRenderTarget)
     {
         PLSRenderContext::FrameDescriptor frameDescriptor = {
             .renderTargetWidth = m_renderTarget->width(),
             .renderTargetHeight = m_renderTarget->height(),
-            .loadAction = pls::LoadAction::clear,
+            .loadAction = preserveRenderTarget ? pls::LoadAction::preserveRenderTarget : pls::LoadAction::clear,
             .clearColor = 0,
         };
         if (m_renderTarget->sampleCount() > 1)
