@@ -19,8 +19,8 @@ do
     linkoptions({
         '--bind',
         -- TODO: uncomment this to enable asyncify for wasm, check in with -Oz as well
-        -- '-O3',
-        -- '-s ASYNCIFY',
+        '-O3',
+        '-s ASYNCIFY',
         '-s FORCE_FILESYSTEM=0',
         '-s MODULARIZE=1',
         '-s NO_EXIT_RUNTIME=1',
@@ -30,6 +30,7 @@ do
         -- "-s EXPORT_ES6=1",
         '-s USE_ES6_IMPORT_META=0',
         '-s EXPORT_NAME="Rive"',
+        '-s EXPORTED_RUNTIME_METHODS=HEAP8,HEAPU32,GL',
         '-s ENVIRONMENT="web,webview,worker"',
         '-DEMSCRIPTEN_HAS_UNBOUND_TYPE_NAMES=0',
         '-DSINGLE',
