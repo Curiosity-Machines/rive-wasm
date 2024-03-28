@@ -1,4 +1,4 @@
-name: Build JS
+name: Build WASM
 on:
   push:
     branches:
