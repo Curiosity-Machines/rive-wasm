@@ -32,6 +32,7 @@ do
         -- "-s EXPORT_ES6=1",
         '-s USE_ES6_IMPORT_META=0',
         '-s EXPORT_NAME="Rive"',
+        '-s EXPORTED_RUNTIME_METHODS=HEAP8,HEAPU32,GL',
         '-s ENVIRONMENT="web,webview,worker"',
         '-DEMSCRIPTEN_HAS_UNBOUND_TYPE_NAMES=0',
         '-DSINGLE',

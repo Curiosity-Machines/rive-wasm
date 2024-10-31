@@ -283,6 +283,8 @@ public:
             // Always use MSAA if we don't have WEBGL_shader_pixel_local_storage.
             frameDescriptor.msaaSampleCount = 4;
         }
+
+        renderContextGL()->invalidateGLState();
         m_renderContext->beginFrame(std::move(frameDescriptor));
         ++m_currentFrameID;
     }
@@ -355,6 +357,15 @@ public:
     {
         m_plsSynchronizedBuffers.erase(webglBufferID);
     }
+
+    GLuint getOffscreenTargetTextureID() { return m_renderTarget->externalTextureID(); }
+
+    void allocateOffscreenTargetTexture()
+    {
+        return m_renderTarget->allocateOffscreenTargetTexture();
+    }
+
+    void unbindResources() { renderContextGL()->unbindGLInternalResources(); }
 
 private:
     RiveRenderImage* getImage(const WebGL2RenderImage* webglImage)
@@ -569,6 +580,9 @@ EMSCRIPTEN_BINDINGS(RiveWASM_WebGL2)
         .function("flush", &WebGL2Renderer::flush)
         .function("resize", &WebGL2Renderer::resize)
         .function("saveClipRect", &WebGL2Renderer::saveClipRect)
+        .function("getOffscreenTargetTextureID", &WebGL2Renderer::getOffscreenTargetTextureID)
+        .function("allocateOffscreenTargetTexture", &WebGL2Renderer::allocateOffscreenTargetTexture)
+        .function("unbindResources", &WebGL2Renderer::unbindResources)
         .function("restoreClipRect", &WebGL2Renderer::restoreClipRect);
     class_<RenderImage>("RenderImage")
         .function("unref", &RenderImageWrapper::unref)
