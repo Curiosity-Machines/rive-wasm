@@ -1,24 +1,20 @@
 name: Build JS
-on: push
+on:
+  push:
+    branches:
+      - "master"
+
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
         with:
-          submodules: true
+          submodules: recursive
       - uses: actions/setup-node@v3
         with:
           node-version: "20.x"
           registry-url: "https://registry.npmjs.org"
-      - name: Checkout Rive Renderer Repo
-        uses: actions/checkout@v3
-        with:
-          submodules: true
-          repository: rive-app/rive-renderer
-          token: ${{ secrets.PAT_GITHUB }}
-          path: ./wasm/submodules/rive-renderer
-          ref: main
       - name: Setup emsdk
         uses: mymindstorm/setup-emsdk@v11
         with:
@@ -41,8 +37,15 @@ jobs:
       - name: Setup Ninja
         uses: seanmiddleditch/gha-setup-ninja@master
       - name: Build
-        env:
-          PAT_GITHUB: ${{ secrets.PAT_GITHUB }}
-        run: cd js && ./build.sh
-      - name: Run tests
-        run: cd js && npm test
+        working-directory: wasm
+        run: |
+          OUT_DIR=build/webgl2_advanced_single/bin/release ./build_wasm.sh -r webgl2 -s release
+      - name: Create Release
+        uses: ncipollo/release-action@v1
+        with:
+          artifacts: "wasm/build/webgl2_advanced_single/bin/release/webgl2_advanced_single.mjs"
+          token: ${{ secrets.GITHUB_TOKEN }}
+          tag: build-${{ github.run_number }}
+          name: Release build-${{ github.run_number }}
+          draft: false
+          prerelease: false
