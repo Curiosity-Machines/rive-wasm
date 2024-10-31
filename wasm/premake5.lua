@@ -19,9 +19,8 @@ do
 
     linkoptions({
         '--bind',
-        -- TODO: uncomment this to enable asyncify for wasm, check in with -Oz as well
-        -- '-O3',
-        -- '-s ASYNCIFY',
+        '-O3',
+        '-s ASYNCIFY',
         '-s STACK_SIZE=256kb',
         '-s FORCE_FILESYSTEM=0',
         '-s MODULARIZE=1',
